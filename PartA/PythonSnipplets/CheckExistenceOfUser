@@ -1,0 +1,15 @@
+import sqlite3
+from getpass import getpass
+def check_credentials(conn, email, password):
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE email=? AND password=?", (email, password))
+    user = cursor.fetchone()
+    if user:
+        print("User exists in the database")
+    else:
+        print("User does not exist or incorrect credentials")
+conn = sqlite3.connect('user_credentials.db')
+email = input("Enter email: ")
+password = getpass("Enter password: ")
+check_credentials(conn, email, password)
+conn.close()
